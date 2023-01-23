@@ -37,10 +37,23 @@ test:
 
 about:
   home: https://github.com/mahmoud/boltons
+  dev_url: https://github.com/mahmoud/boltons
+  doc_url: https://boltons.readthedocs.io/
   license: BSD-3-Clause
   license_file: LICENSE
+  license_family: BSD
   summary: >
     boltons should be builtins. Boltons is a set of over 160 BSD-licensed, pure-Python utilities in the same spirit as--and yet conspicuously missing from--the standard library.
+  description: |
+    Boltons is a set of pure-Python utilities in the same spirit as — and yet conspicuously missing from — the standard library, including:
+
+      - Atomic file saving, bolted on with fileutils
+      - A highly-optimized OrderedMultiDict, in dictutils
+      - Two types of PriorityQueue, in queueutils
+      - Chunked and windowed iteration, in iterutils
+      - A full-featured TracebackInfo type, for representing stack traces, in tbutils
+      - A lightweight UTC timezone available in timeutils.
+      - Recursive mapping for nested data transforms, with remap
 
 extra:
   recipe-maintainers:
