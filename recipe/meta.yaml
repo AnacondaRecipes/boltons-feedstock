@@ -37,6 +37,35 @@ test:
     - boltons
     - tests
     - pytest.ini
+  imports:
+    - boltons
+    - boltons.cacheutils
+    - boltons.debugutils
+    - boltons.dictutils
+    - boltons.ecoutils
+    - boltons.fileutils
+    - boltons.formatutils
+    - boltons.funcutils
+    - boltons.gcutils
+    - boltons.ioutils
+    - boltons.iterutils
+    - boltons.jsonutils
+    - boltons.listutils
+    - boltons.mathutils
+    - boltons.mboxutils
+    - boltons.namedutils
+    - boltons.pathutils
+    - boltons.queueutils
+    - boltons.setutils
+    - boltons.socketutils
+    - boltons.statutils
+    - boltons.strutils
+    - boltons.tableutils
+    - boltons.tbutils
+    - boltons.timeutils
+    - boltons.typeutils
+    - boltons.urlutils
+
   requires:
     - pytest
   commands:
