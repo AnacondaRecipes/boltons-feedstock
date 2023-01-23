@@ -22,8 +22,8 @@ build:
 
 requirements:
   build:
-    - m2-patch  # [win]
-    - patch  # [not win]
+    - m2-patch  # [win and py>39]
+    - patch  # [not win and py>39]
   host:
     - pip
     - python
