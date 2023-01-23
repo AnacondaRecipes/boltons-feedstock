@@ -68,6 +68,7 @@ test:
 
   requires:
     - pytest
+    - pip
   commands:
     - pytest --doctest-modules boltons tests
     - pip check
