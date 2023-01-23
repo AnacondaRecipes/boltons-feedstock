@@ -70,6 +70,7 @@ test:
     - pytest
   commands:
     - pytest --doctest-modules boltons tests
+    - pip check
 
 about:
   home: https://github.com/mahmoud/boltons
