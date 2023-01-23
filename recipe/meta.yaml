@@ -10,7 +10,7 @@ source:
   fn: boltons-{{ version }}.tar.gz
   url: https://github.com/mahmoud/boltons/archive/{{ version }}.tar.gz
   sha256: {{ hash }}
-  patches:
+  patches:  # [py>39]
     # https://github.com/mahmoud/boltons/commit/270e974975984f662f998c8f6eb0ebebd964de82
     # Can be removed in next version (>21.0.0)
     - patches/00_fix_py310_tests.patch  # [py>39]
