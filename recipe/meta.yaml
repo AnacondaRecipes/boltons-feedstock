@@ -58,7 +58,7 @@ test:
     - boltons.queueutils
     - boltons.setutils
     - boltons.socketutils
-    - boltons.statutils
+    - boltons.statsutils
     - boltons.strutils
     - boltons.tableutils
     - boltons.tbutils
