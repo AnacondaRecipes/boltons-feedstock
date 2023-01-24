@@ -16,7 +16,6 @@ source:
     - patches/00_fix_py310_tests.patch  # [py>39]
 
 build:
-  noarch: python
   number: 1
   script: {{ PYTHON }} -m pip install . --no-deps -vv
 
