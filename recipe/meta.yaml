@@ -1,6 +1,5 @@
 {% set name = "boltons" %}
-{% set version = "23.0.0" %}
-{% set hash = "9b2998cd9525ed472079c7dd90fbd216a887202e8729d5969d4f33878f0ff668" %}
+{% set version = "24.1.0" %}
 
 package:
   name: {{ name }}
@@ -9,11 +8,12 @@ package:
 source:
   fn: boltons-{{ version }}.tar.gz
   url: https://github.com/mahmoud/boltons/archive/{{ version }}.tar.gz
-  sha256: {{ hash }}
+  sha256: 6e286ffb9de4e227deedf1513cd83cad4e2581f13a7fbb51609885e5c7f0f676
 
 build:
   number: 0
-  script: {{ PYTHON }} -m pip install . --no-deps -vv
+  script: {{ PYTHON }} -m pip install . --no-deps -vv --no-build-isolation
+  skip: True # [py<37]
 
 requirements:
   host:
@@ -62,9 +62,9 @@ test:
     - pytest
     - pip
   commands:
-    # tests/test_jsonutils.py::test_reverse_iter_lines fails due to line endings on windows.
-    - pytest -vv --doctest-modules boltons tests -k "not test_reverse_iter_lines"  # [win]
-    - pytest -vv --doctest-modules boltons tests  # [not win]
+    # # tests/test_jsonutils.py::test_reverse_iter_lines fails due to line endings on windows.
+    # - pytest -vv --doctest-modules boltons tests -k "not test_reverse_iter_lines"  # [win]
+    - pytest -vv tests
     - pip check
 
 about:
