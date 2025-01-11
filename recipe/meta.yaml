@@ -57,14 +57,13 @@ test:
     - boltons.timeutils
     - boltons.typeutils
     - boltons.urlutils
-
   requires:
     - pytest
     - pip
   commands:
     # # tests/test_jsonutils.py::test_reverse_iter_lines fails due to line endings on windows.
     # - pytest -vv --doctest-modules boltons tests -k "not test_reverse_iter_lines"  # [win]
-    - pytest -vv tests
+    - pytest -vv --doctest-modules boltons tests
     - pip check
 
 about:
