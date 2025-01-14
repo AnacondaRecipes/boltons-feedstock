@@ -1,0 +1,165 @@
+From b8ca4f3808c5fdd60a94dfd16022e7fc773766b7 Mon Sep 17 00:00:00 2001
+From: Jaida Rice <jaidarice@gmail.com>
+Date: Tue, 14 Jan 2025 14:07:11 -0800
+Subject: [PATCH] Fixes tests to be compatible with Python 3.13
+
+---
+ boltons/ioutils.py   |  4 ++--
+ boltons/iterutils.py | 20 ++++++++++----------
+ boltons/urlutils.py  | 22 +++++++++++-----------
+ 3 files changed, 23 insertions(+), 23 deletions(-)
+
+diff --git a/boltons/ioutils.py b/boltons/ioutils.py
+index bfcaf3f..9a536d2 100644
+--- a/boltons/ioutils.py
++++ b/boltons/ioutils.py
+@@ -529,9 +529,9 @@ class MultiFileReader:
+ 
+        >>> mfr = MultiFileReader(BytesIO(b'ab'), BytesIO(b'cd'), BytesIO(b'e'))
+        >>> mfr.read(3).decode('ascii')
+-       u'abc'
++       'abc'
+        >>> mfr.read(3).decode('ascii')
+-       u'de'
++       'de'
+ 
+     The constructor takes as many fileobjs as you hand it, and will
+     raise a TypeError on non-file-like objects. A ValueError is raised
+diff --git a/boltons/iterutils.py b/boltons/iterutils.py
+index e0a5b90..eced48b 100644
+--- a/boltons/iterutils.py
++++ b/boltons/iterutils.py
+@@ -421,8 +421,8 @@ def pairwise(src, end=_UNSET):
+     >>> pairwise([])
+     []
+ 
+-    Unless *end* is set, the number of pairs is always one less than 
+-    the number of elements in the iterable passed in, except on an empty input, 
++    Unless *end* is set, the number of pairs is always one less than
++    the number of elements in the iterable passed in, except on an empty input,
+     which will return an empty list.
+ 
+     With *end* set, a number of pairs equal to the length of *src* is returned,
+@@ -445,15 +445,15 @@ def pairwise_iter(src, end=_UNSET):
+     >>> list(pairwise_iter([]))
+     []
+ 
+-    Unless *end* is set, the number of pairs is always one less 
+-    than the number of elements in the iterable passed in, 
++    Unless *end* is set, the number of pairs is always one less
++    than the number of elements in the iterable passed in,
+     or zero, when *src* is empty.
+ 
+     With *end* set, a number of pairs equal to the length of *src* is returned,
+-    with the last item of the last pair being equal to *end*. 
++    with the last item of the last pair being equal to *end*.
+ 
+     >>> list(pairwise_iter(range(3), end=None))
+-    [(0, 1), (1, 2), (2, None)]    
++    [(0, 1), (1, 2), (2, None)]
+ 
+     This way, *end* values can be useful as sentinels to signal the end
+     of the iterable. For infinite iterators, setting *end* has no effect.
+@@ -462,8 +462,8 @@ def pairwise_iter(src, end=_UNSET):
+ 
+ 
+ def windowed(src, size, fill=_UNSET):
+-    """Returns tuples with exactly length *size*. If *fill* is unset 
+-    and the iterable is too short to make a window of length *size*, 
++    """Returns tuples with exactly length *size*. If *fill* is unset
++    and the iterable is too short to make a window of length *size*,
+     no tuples are returned. See :func:`windowed_iter` for more.
+     """
+     return list(windowed_iter(src, size, fill=fill))
+@@ -476,7 +476,7 @@ def windowed_iter(src, size, fill=_UNSET):
+     >>> list(windowed_iter(range(7), 3))
+     [(0, 1, 2), (1, 2, 3), (2, 3, 4), (3, 4, 5), (4, 5, 6)]
+ 
+-    If *fill* is unset, and the iterable is too short to make a window 
++    If *fill* is unset, and the iterable is too short to make a window
+     of length *size*, then no window tuples are returned.
+ 
+     >>> list(windowed_iter(range(3), 5))
+@@ -1300,7 +1300,7 @@ def get_path(root, path, default=_UNSET):
+        root: The target nesting of dictionaries, lists, or other
+           objects supporting ``__getitem__``.
+        path (tuple): A sequence of strings and integers to be successively
+-          looked up within *root*. A dot-separated (``a.b``) string may 
++          looked up within *root*. A dot-separated (``a.b``) string may
+           also be passed.
+        default: The value to be returned should any
+           ``PathAccessError`` exceptions be raised.
+diff --git a/boltons/urlutils.py b/boltons/urlutils.py
+index 45d3e73..2d1a033 100644
+--- a/boltons/urlutils.py
++++ b/boltons/urlutils.py
+@@ -140,9 +140,9 @@ def find_all_links(text, with_text=False, default_scheme='https', schemes=()):
+     interleaved text as well.
+ 
+     >>> find_all_links('Visit https://boltons.rtfd.org!')
+-    [URL(u'https://boltons.rtfd.org')]
++    [URL('https://boltons.rtfd.org')]
+     >>> find_all_links('Visit https://boltons.rtfd.org!', with_text=True)
+-    [u'Visit ', URL(u'https://boltons.rtfd.org'), u'!']
++    ['Visit ', URL('https://boltons.rtfd.org'), '!']
+ 
+     Args:
+        text (str): The text to search.
+@@ -282,8 +282,8 @@ def unquote(string, encoding='utf-8', errors='replace'):
+     default, percent-encoded sequences are decoded with UTF-8, and
+     invalid sequences are replaced by a placeholder character.
+ 
+-    >>> unquote(u'abc%20def')
+-    u'abc def'
++    >>> unquote('abc%20def')
++    'abc def'
+     """
+     if '%' not in string:
+         string.split
+@@ -562,7 +562,7 @@ class URL:
+ 
+         >>> url = URL('http://boltons.readthedocs.io/?utm_source=doctest&python=great')
+         >>> url.qp.keys()
+-        [u'utm_source', u'python']
++        ['utm_source', 'python']
+         """
+         return QueryParamDict.from_text(self._query)
+ 
+@@ -655,7 +655,7 @@ class URL:
+ 
+         >>> url = URL('http://boltons.readthedocs.io')
+         >>> url.navigate('en/latest/')
+-        URL(u'http://boltons.readthedocs.io/en/latest/')
++        URL('http://boltons.readthedocs.io/en/latest/')
+ 
+         Args:
+            dest (str): A string or URL object representing the destination
+@@ -1066,8 +1066,8 @@ class OrderedMultiDict(dict):
+     def __new__(cls, *a, **kw):
+         ret = super().__new__(cls)
+         ret._clear_ll()
+-        return ret 
+-    
++        return ret
++
+     def __init__(self, *args, **kwargs):
+         if len(args) > 1:
+             raise TypeError('%s expected at most 1 argument, got %s'
+@@ -1565,11 +1565,11 @@ class QueryParamDict(OrderedMultiDict):
+     As the name suggests, multiple values are supported and insertion
+     order is preserved.
+ 
+-    >>> qp = QueryParamDict.from_text(u'key=val1&key=val2&utm_source=rtd')
++    >>> qp = QueryParamDict.from_text('key=val1&key=val2&utm_source=rtd')
+     >>> qp.getlist('key')
+-    [u'val1', u'val2']
++    ['val1', 'val2']
+     >>> qp['key']
+-    u'val2'
++    'val2'
+     >>> qp.add('key', 'val3')
+     >>> qp.to_text()
+     'key=val1&key=val2&utm_source=rtd&key=val3'
+-- 
+2.32.1 (Apple Git-133)
+
