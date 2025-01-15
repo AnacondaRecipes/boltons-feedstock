@@ -9,8 +9,6 @@ source:
   fn: boltons-{{ version }}.tar.gz
   url: https://github.com/mahmoud/boltons/archive/{{ version }}.tar.gz
   sha256: 6e286ffb9de4e227deedf1513cd83cad4e2581f13a7fbb51609885e5c7f0f676
-  patches:
-    - patches/0001-Fixes-tests-to-be-compatible-with-Python-3.13.patch
 
 build:
   number: 0
@@ -18,9 +16,6 @@ build:
   skip: True # [py<37]
 
 requirements:
-  build:
-    - patch 			# [unix]
-    - m2-patch		# [win]
   host:
     - pip
     - python
@@ -33,6 +28,7 @@ test:
   source_files:
     - boltons
     - tests
+    - pytest.ini
   imports:
     - boltons
     - boltons.cacheutils
