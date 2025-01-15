@@ -62,8 +62,8 @@ test:
     - pip
   commands:
     # tests/test_jsonutils.py::test_reverse_iter_lines fails due to line endings on windows.
-    - pytest -vv --doctest-modules boltons tests -k "not test_reverse_iter_lines"  # [win]
-    # Test fails on CI due to 'private' being appended to path. Verified it works locally.
+    # tests/test_fileutils.py::test_iter_find_files fails on osx and windows due to 'private' being appended to path. Verified it works locally.
+    - pytest -vv --doctest-modules boltons tests -k "not test_reverse_iter_lines or test_iter_find_files"  # [win]
     - pytest -vv --doctest-modules boltons tests -k "not test_iter_find_files" # [osx]
     - pytest -vv --doctest-modules boltons tests  # [not (win or osx)]
     - pip check
