@@ -19,8 +19,6 @@ requirements:
   host:
     - pip
     - python
-    - setuptools
-    - wheel
     - flit-core >=3.2,<4
   run:
     - python
@@ -61,7 +59,7 @@ test:
   requires:
     - pytest
     - pip
-commands:
+  commands:
     # Add back now missing pytest.ini matching https://github.com/mahmoud/boltons/blob/24.1.0/pytest.ini
     - echo '[pytest]' > pytest.ini
     - echo 'doctest_optionflags = NORMALIZE_WHITESPACE IGNORE_EXCEPTION_DETAIL ELLIPSIS ALLOW_UNICODE' >> pytest.ini
