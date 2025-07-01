@@ -1,5 +1,5 @@
 {% set name = "boltons" %}
-{% set version = "24.1.0" %}
+{% set version = "25.0.0" %}
 
 package:
   name: {{ name }}
@@ -8,7 +8,7 @@ package:
 source:
   fn: boltons-{{ version }}.tar.gz
   url: https://github.com/mahmoud/boltons/archive/{{ version }}.tar.gz
-  sha256: 6e286ffb9de4e227deedf1513cd83cad4e2581f13a7fbb51609885e5c7f0f676
+  sha256: 7c9e47f2ca1c1f704950e913bf518c6c599dc4a01bc5feffffce2c3bf3c878ee
 
 build:
   number: 0
@@ -19,8 +19,7 @@ requirements:
   host:
     - pip
     - python
-    - setuptools
-    - wheel
+    - flit-core >=3.2,<4
   run:
     - python
 
@@ -28,7 +27,7 @@ test:
   source_files:
     - boltons
     - tests
-    - pytest.ini
+    - tox.ini
   imports:
     - boltons
     - boltons.cacheutils
@@ -61,12 +60,14 @@ test:
     - pytest
     - pip
   commands:
+    # Add back now missing pytest.ini matching https://github.com/mahmoud/boltons/blob/24.1.0/pytest.ini
+    - echo [pytest] > pytest.ini
+    - echo doctest_optionflags = NORMALIZE_WHITESPACE IGNORE_EXCEPTION_DETAIL ELLIPSIS ALLOW_UNICODE >> pytest.ini
     # tests/test_jsonutils.py::test_reverse_iter_lines fails due to line endings on windows.
-    # tests/test_fileutils.py::test_iter_find_files fails on osx and windows due to 'private' being appended to path. Verified it works locally.
-    - pytest -vv --doctest-modules boltons tests -k "not test_reverse_iter_lines or test_iter_find_files"  # [win]
-    - pytest -vv --doctest-modules boltons tests -k "not test_iter_find_files" # [osx]
-    - pytest -vv --doctest-modules boltons tests  # [not (win or osx)]
+    - pytest -vv --doctest-modules boltons tests -k "not test_reverse_iter_lines"  # [win]
+    - pytest -vv --doctest-modules boltons tests  # [not win]
     - pip check
+
 
 about:
   home: https://github.com/mahmoud/boltons
